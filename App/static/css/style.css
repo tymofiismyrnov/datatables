@@ -53,7 +53,7 @@ body {
 -------------------------------- */
 /* Pagination */
 .dataTables_paginate {
-    margin-top: 10px !important;
+    margin-top: -30px !important;
 }
 
 /* Input search */
@@ -62,5 +62,10 @@ body {
 }
 /* Show entries */
 .dataTables_length {
-    margin-bottom: 10px !important;
+    float: right;
+    margin-top: 10px !important;
+}
+/* Group buttons */
+.dt-buttons {
+    margin-bottom: 10px;
 }

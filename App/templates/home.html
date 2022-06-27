@@ -49,9 +49,12 @@
     <!-- Jquery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <!-- Datatables -->
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    <!-- Datatables JS -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/v/bs5/jq-3.6.0/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.js"></script>
+
     <!-- Datatables script -->
     <script>
         $("#example").DataTable({
@@ -60,12 +63,78 @@
             lengthChange: true,
             autoWidht: false,
             searching: true,
+            order: [[4, 'desc']],
             bInfo: true,
             bSort: true,
+            // BUTTONS
+            dom: 'lBfrtip',
+            buttons: [
+
+                {
+                    extend: 'copy',
+                    text: '<i class="fas fa-clone"></i>',
+                    className: 'btn btn-secondary',
+                    titleAttr: 'Copy to clipboard',
+                    exportOptions: {
+                        columns: ':visible'
+                    },
+                },
+                {
+                    extend: 'csv',
+                    text: '<i class="fas fa-file-csv"></i>',
+                    className: 'btn btn-secondary',
+                    titleAttr: 'Download as CSV',
+                    exportOptions: {
+                        columns: ':visible'
+                    },
+                },
+                {
+                    extend: 'print',
+                    text: '<i class="fas fa fa-print"></i>',
+                    className: 'btn btn-secondary',
+                    titleAttr: 'Print',
+                    exportOptions: {
+                        columns: ':visible'
+                    },
+                    customize: function (win) {
+                        $(win.document.body).css('font-size', '10pt')
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    download: 'open',
+                    text: '<i class="fas fa-file-pdf"></i>',
+                    className: 'btn btn-secondary',
+                    titleAttr: 'Download as PDF',
+                    exportOptions: {
+                        columns: ':visible'
+                    },
+                    // Center the table
+                    tableHeader: {
+                        alignment: 'center'
+                    },
+                    customize: function (doc) {
+                        doc.styles.tableHeader.alignment = 'center';
+                        doc.styles.tableBodyOdd.alignment = 'center';
+                        doc.styles.tableBodyEven.alignment = 'center';
+                        doc.styles.tableHeader.fontSize = 7;
+                        // doc.defaultStyle.fontSize = 6;
+                        //doc.content[1].table.widths =
+                        //    Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                    }
+                },
+                {
+                    extend: 'colvis',
+                    text: 'Columns'
+                }
+            ]
         });
         // Enable search box outside
         let newSearch = $("#example").DataTable();
-        $('#search').keyup(function() {
+        $('#search').keyup(function () {
             newSearch.search($(this).val()).draw();
         });
     </script>
