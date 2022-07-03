@@ -69,3 +69,7 @@ body {
 .dt-buttons {
     margin-bottom: 10px;
 }
+thead input {
+    width: 100%;
+    text-align: center;
+}
