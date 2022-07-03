@@ -20,4 +20,6 @@ from App import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name="home"),
+    # JSON path
+    path('json/', views.employee_json, name='employee_json'),
 ]
